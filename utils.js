@@ -1,8 +1,7 @@
 const { cp } = require("fs");
 
-let solutions = [];
 
-module.exports.printBoard = (board) => {
+const printBoard = (board) => {
     let printString = []
     let rowDivider = "---------------------------"
     // column headers
@@ -44,7 +43,7 @@ module.exports.printBoard = (board) => {
     console.log(rowDivider)
 }
 
-isValid = (row, col, board, num) => {
+const isValid = (row, col, board, num) => {
     // check if number exists in the row
     if (board[row].includes(num)){
         // console.log(`${num} exists in this row already`)
@@ -74,7 +73,6 @@ isValid = (row, col, board, num) => {
 const solve = (row = 0, col = 0, board) => {
     // console.log(`WORKING ON ROW ${row} COL ${col}`)
     if (row == 9){
-        solutions.push(board);      // add the completed board to the solutions array if board is completed
         return true
     } else if (col == 9){
         return solve(row+1, 0, board);
@@ -98,9 +96,10 @@ const solve = (row = 0, col = 0, board) => {
     }
 }
 
-module.exports.solve = solve
-
-module.exports.rotateMatrix = (array) => {
+const rotateMatrix = (array, times) => {
+    if (times === 0){
+        return array;
+    }
     const n = array.length
     // create a temp array
     let temp = Array.from(Array(n), () => Array.from(Array(n)));
@@ -111,7 +110,7 @@ module.exports.rotateMatrix = (array) => {
             temp[j][n - (i + 1)] = array[i][j];
         }
     }
-    return temp;
+    return rotateMatrix(temp, times - 1);
 }
 
 const shuffle = (low, high) => {
@@ -121,13 +120,13 @@ const shuffle = (low, high) => {
     }
     let currentIndex = arr.length;
     let tempValue, randomIndex;
-
+    
     // While there are elements to shuffle
     while (currentIndex !== 0){
         // Pick a remaining element
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex--;
-
+        
         // Swap the number at the random index with the currentIndex
         tempValue = arr[currentIndex];
         arr[currentIndex] = arr[randomIndex];
@@ -136,7 +135,10 @@ const shuffle = (low, high) => {
     return arr;
 }
 
-module.exports.mapMatrix = (array) => {
+const mapMatrix = (array, times) => {
+    if (times === 0){
+        return
+    }
     let map = shuffle(1,9);
     for(let row = 0; row < array.length; row++){
         for (let col = 0; col < array.length; col++){
@@ -146,9 +148,13 @@ module.exports.mapMatrix = (array) => {
             }
         }
     }
+    mapMatrix(array, times - 1);
 }
 
-const shuffleRows = (array) => {
+const shuffleRows = (array, times) => {
+    if (times === 0){
+        return
+    }
     let top = shuffle(0,2);
     let middle = shuffle(3,5);
     let bottom = shuffle(6,8);
@@ -159,7 +165,42 @@ const shuffleRows = (array) => {
         array[swapIndex] = array[i];
         array[i] = temp;
     }
-    console.log(array)
+    shuffleRows(array, times -1);
 }
 
-module.exports.shuffleRows = shuffleRows
+const shuffleCols = (array, times) => {
+    if (times === 0){
+        return;
+    }
+    array = rotateMatrix(array, 1);
+    shuffleRows(array, 1);
+    array = rotateMatrix(array, 3);
+    shuffleCols(array, times - 1);
+}
+
+const generateRandom = (low, high) => {
+    return Math.floor(Math.random() * high) + low;
+}
+
+const generateSudoku = (file) => {
+    let seed = [];
+    // split the text by new line and filter away any elements that are a return carriage or empty string
+    let rows = file.split('\n').filter((element) => element !== '\r' && element !== '')
+    for (let i = 0; i < rows.length; i++){
+        // split the spaces so only the chars of the numbers remain
+        rows[i] = rows[i].split(' ');
+        // cast the string of the number to an int
+        seed[i] = rows[i].map((value) => parseInt(value));
+    }
+    let puzzle = rotateMatrix(seed, generateRandom(0, 107));
+    mapMatrix(puzzle, generateRandom(0, 107));
+    shuffleRows(puzzle, generateRandom(0, 107));
+    shuffleCols(puzzle, generateRandom(0, 107));
+    return puzzle;
+}
+
+module.exports = {
+    printBoard,
+    solve,
+    generateSudoku
+}

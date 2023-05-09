@@ -10,7 +10,8 @@
 Seeds for sudoku puzzles taken from http://lipas.uwasa.fi/~timan/sudoku/
 */
 
-const { printBoard, solve, rotateMatrix, mapMatrix, shuffleRows } = require('./utils');
+const { printBoard, solve, generateSudoku } = require('./utils');
+const { readFileSync } = require('fs');
 
 // const solution = [
 //     [4, 3, 5, 2, 6, 9, 7, 8, 1],
@@ -24,34 +25,16 @@ const { printBoard, solve, rotateMatrix, mapMatrix, shuffleRows } = require('./u
 //     [7, 6, 3, 4, 1, 8, 2, 5, 9]
 // ]
 
-const seed = [];
+let rand = Math.ceil(Math.random() * 6)
+const fileName = `puzzles/${process.argv[2]}${rand}.txt`
 
-const fs = require('fs');
+const file = readFileSync(fileName, 'utf-8');
+const puzzle = generateSudoku(file);
 
-fs.readFile(`puzzles/${process.argv[2]}`, 'utf-8', (err, data) => {
-    if (err) { 
-        console.error(err);
-        return;
-    }
-    // split the text by new line and filter away any elements that are a return carriage or empty string
-    let rows = data.split('\n').filter((element) => element !== '\r' && element !== '')
-    for (let i = 0; i < rows.length; i++){
-        // split the spaces so only the chars of the numbers remain
-        rows[i] = rows[i].split(' ');
-        // cast the string of the number to an int
-        seed[i] = rows[i].map((value) => parseInt(value));
-    }
-    let puzzle = rotateMatrix(seed);
-    shuffleRows(puzzle);
-    if (solve(0,0, puzzle)){
-        printBoard(puzzle);
-    } else{
-        console.log("Could not find a solution");
-    }
-    mapMatrix(puzzle)
-    if (solve(0,0, puzzle)){
-        printBoard(puzzle);
-    } else{
-        console.log("Could not find a solution");
-    }
-});
+printBoard(puzzle);
+
+// if (solve(0,0, puzzle)){
+//     printBoard(puzzle);
+// } else{
+//     console.log("Could not find a solution");
+// }
