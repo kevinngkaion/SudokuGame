@@ -1,3 +1,5 @@
+let solutions = [];
+
 module.exports.printBoard = (board) => {
     let printString = []
     let rowDivider = "---------------------------"
@@ -70,7 +72,8 @@ isValid = (row, col, board, num) => {
 const solve = (row = 0, col = 0, board) => {
     // console.log(`WORKING ON ROW ${row} COL ${col}`)
     if (row == 9){
-        return true;
+        solutions.push(board);      // add the completed board to the solutions array if board is completed
+        return true
     } else if (col == 9){
         return solve(row+1, 0, board);
     } else if (board[row][col] != 0){
@@ -85,8 +88,6 @@ const solve = (row = 0, col = 0, board) => {
                     return true;
                 }
                 board[row][col] = 0;
-            } else{
-                // console.log(`${k} is invalid`)
             }
             // console.log(`${k}`)
         }
@@ -96,3 +97,17 @@ const solve = (row = 0, col = 0, board) => {
 }
 
 module.exports.solve = solve
+
+module.exports.rotateMatrix = (array) => {
+    const n = array.length
+    // create a temp array
+    let temp = Array.from(Array(n), () => Array.from(Array(n)));
+    // iterate over the array
+    // each array element arr[i][j] will move to its new index of arr[j][n - (i + 1)]
+    for (let i = 0; i < n; i++){
+        for (let j = 0; j < n ; j++){
+            temp[j][n - (i + 1)] = array[i][j];
+        }
+    }
+    return temp;
+}
