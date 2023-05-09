@@ -8,6 +8,8 @@
 3. Use working test cases to start developing sudoku generator
 */
 
+const utils = require('./utils');
+
 const solution = [
     [4, 3, 5, 2, 6, 9, 7, 8, 1],
     [6, 8, 2, 5, 7, 1, 4, 9, 3],
@@ -32,46 +34,8 @@ const puzzle = [
     [7, 0, 3, 0, 1, 8, 0, 0, 0]
 ]
 
-const printBoard = (board) => {
-    let printString = []
-    let rowDivider = "---------------------------"
-    // column headers
-    printString.push("  | ")
-    for (i = 0; i < board.length; i++){
-        if (i > 0 && i % 3 == 0){
-            printString.push("| ")
-        }
-        printString.push(i+1)
-        printString.push(" ")
-    }
-    
-    printString.push("|")
-    console.log(printString.join(""))
-    console.log(rowDivider) //top border
-    for (row = 0; row < board.length; row++){
-        printString = [];
-        if (row > 0 && row % 3 == 0){
-            console.log(rowDivider) // dividing every 3 rows
-        }
-        printString.push(String.fromCharCode(row + 65) + " ");  // Inserting row headers. ASCII 65 is 'A'
-        for (col = 0; col < board.length; col++){
-            
-            if (col % 3 == 0){
-                printString.push("| ");
-            }
-            if (board[row][col] == 0){
-                printString.push("_");
-            } else{
-                printString.push(board[row][col].toString());
-            }
-            printString.push(" ");
-            if (col == board.length - 1){
-                printString.push("| ");
-            }
-        }
-        console.log(printString.join(""));  // joining the array elements together into a string
-    }
-    console.log(rowDivider)
+if (utils.solve(0,0, puzzle)){
+    utils.printBoard(puzzle);
+} else{
+    console.log("Could not find a solution");
 }
-
-printBoard(puzzle)
