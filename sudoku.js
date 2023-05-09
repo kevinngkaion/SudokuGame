@@ -8,7 +8,7 @@
 3. Use working test cases to start developing sudoku generator
 */
 
-const { printBoard, solve, rotateMatrix } = require('./utils');
+const { printBoard, solve, rotateMatrix, mapMatrix } = require('./utils');
 
 // const solution = [
 //     [4, 3, 5, 2, 6, 9, 7, 8, 1],
@@ -39,12 +39,13 @@ fs.readFile(`puzzles/${process.argv[2]}`, 'utf-8', (err, data) => {
         // cast the string of the number to an int
         seed[i] = rows[i].map((value) => parseInt(value));
     }
-    if (solve(0,0, seed)){
-        printBoard(seed);
+    let puzzle = rotateMatrix(seed);
+    if (solve(0,0, puzzle)){
+        printBoard(puzzle);
     } else{
         console.log("Could not find a solution");
     }
-    let puzzle = rotateMatrix(seed);
+    mapMatrix(puzzle)
     if (solve(0,0, puzzle)){
         printBoard(puzzle);
     } else{

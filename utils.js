@@ -1,3 +1,5 @@
+const { cp } = require("fs");
+
 let solutions = [];
 
 module.exports.printBoard = (board) => {
@@ -110,4 +112,35 @@ module.exports.rotateMatrix = (array) => {
         }
     }
     return temp;
+}
+
+const shuffle = () => {
+    let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    let currentIndex = arr.length;
+    let tempValue, randomIndex;
+
+    // While there are elements to shuffle
+    while (currentIndex !== 0){
+        // Pick a remaining element
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        // Swap the number at the random index with the currentIndex
+        tempValue = arr[currentIndex];
+        arr[currentIndex] = arr[randomIndex];
+        arr[randomIndex] = tempValue;
+    }
+    return arr;
+}
+
+module.exports.mapMatrix = (array) => {
+    let map = shuffle();
+    for(let row = 0; row < array.length; row++){
+        for (let col = 0; col < array.length; col++){
+            let val = array[row][col];
+            if (val !== 0){
+                array[row][col] = map[val-1];
+            }
+        }
+    }
 }
