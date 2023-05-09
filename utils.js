@@ -114,8 +114,11 @@ module.exports.rotateMatrix = (array) => {
     return temp;
 }
 
-const shuffle = () => {
-    let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+const shuffle = (low, high) => {
+    let arr = []
+    for (let i = low; i <= high; i++){
+        arr.push(i);
+    }
     let currentIndex = arr.length;
     let tempValue, randomIndex;
 
@@ -134,7 +137,7 @@ const shuffle = () => {
 }
 
 module.exports.mapMatrix = (array) => {
-    let map = shuffle();
+    let map = shuffle(1,9);
     for(let row = 0; row < array.length; row++){
         for (let col = 0; col < array.length; col++){
             let val = array[row][col];
@@ -144,3 +147,19 @@ module.exports.mapMatrix = (array) => {
         }
     }
 }
+
+const shuffleRows = (array) => {
+    let top = shuffle(0,2);
+    let middle = shuffle(3,5);
+    let bottom = shuffle(6,8);
+    let map = top.concat(middle).concat(bottom)
+    for (let i = 0; i < array.length; i++){
+        let swapIndex = map[i];
+        let temp = array[swapIndex];
+        array[swapIndex] = array[i];
+        array[i] = temp;
+    }
+    console.log(array)
+}
+
+module.exports.shuffleRows = shuffleRows

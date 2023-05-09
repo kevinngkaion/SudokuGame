@@ -6,9 +6,11 @@
     a. Use an existing easy sudoku solution
     b. Write test cases
 3. Use working test cases to start developing sudoku generator
+
+Seeds for sudoku puzzles taken from http://lipas.uwasa.fi/~timan/sudoku/
 */
 
-const { printBoard, solve, rotateMatrix, mapMatrix } = require('./utils');
+const { printBoard, solve, rotateMatrix, mapMatrix, shuffleRows } = require('./utils');
 
 // const solution = [
 //     [4, 3, 5, 2, 6, 9, 7, 8, 1],
@@ -40,6 +42,7 @@ fs.readFile(`puzzles/${process.argv[2]}`, 'utf-8', (err, data) => {
         seed[i] = rows[i].map((value) => parseInt(value));
     }
     let puzzle = rotateMatrix(seed);
+    shuffleRows(puzzle);
     if (solve(0,0, puzzle)){
         printBoard(puzzle);
     } else{
