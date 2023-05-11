@@ -7,18 +7,22 @@ const { printBoard, solve, generateSudoku } = require('./utils');
 const { readFileSync } = require('fs');
 const app = express();
 app.use(cors());
-const port = 3000;
+const port = 8000;
 
-let rand = Math.ceil(Math.random() * 6)
-const fileName = 'easy'
-const filePath = `puzzles/${fileName}${rand}.txt`
-
-const file = readFileSync(filePath, 'utf-8');
-const puzzle = generateSudoku(file);
-const solution = JSON.parse(JSON.stringify(puzzle))
-solve(0,0, solution);
-app.get('/', (req, res) => {
-    res.json({puzzle: puzzle, solution: solution})
+app.get('/sudoku/:difficulty?', (req, res) => {
+    const difficulty = req.params.difficulty;
+    let fileName = 'easy'
+    if (difficulty) {
+        fileName = difficulty;
+    }
+    let rand = Math.ceil(Math.random() * 6)
+    const filePath = `puzzles/${fileName}${rand}.txt`
+    
+    const file = readFileSync(filePath, 'utf-8');
+    const puzzle = generateSudoku(file);
+    const solution = JSON.parse(JSON.stringify(puzzle))
+    solve(0,0, solution);
+    res.status(200).json({puzzle: puzzle, solution: solution})
 })
 
 app.listen(port, () => {

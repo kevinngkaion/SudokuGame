@@ -36,7 +36,8 @@ td {
 .button-container {
   display: flex;
   width: 50vw;
-  min-width: 250px;
+  min-width: 400px;
+  max-width: 500px;
   margin-top: 10px;
   justify-content: space-around;
 }
@@ -54,17 +55,17 @@ td {
   filter: brightness(120%);
 }
 
-.solve {
-  background-color: orange;
-}
+.solve {background-color: orange;}
 
-.check {
-  background-color: tomato;
-}
+.check {background-color: tomato;}
 
-.reset {
-  background-color: teal;
-}
+.reset {background-color: teal;}
+
+.easy { background-color: teal;}
+
+.medium { background-color: orange;}
+
+.hard { background-color: tomato;}
 
 .row-border {
   border-bottom: 2px solid black;
@@ -72,4 +73,8 @@ td {
 
 .col-border{
   border-right: 2px solid black;
+}
+
+.ButtonsTop {
+  margin-bottom: 10px;
 }
