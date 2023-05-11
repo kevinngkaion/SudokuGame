@@ -1,21 +1,25 @@
 import './App.css';
 import { useEffect, useState } from 'react';
 import Board from './Board'
+import ButtonsBottom from './ButtonsBottom';
 
 function Sudoku() {
+  // set the useStates for the props
   const [board, setBoard] = useState(null);
   const [solution, setSolution] = useState(null);
   const [puzzle, setPuzzle] = useState(null);
 
-
+  // returns a deep copy of an array
   const getDeepCopy = (arr) => {
     return JSON.parse(JSON.stringify(arr));
   }
 
+  // This function is called on cell change. It checks the value of the cell and changes the gameBoard accordingly 
   const handleCellChange = (e, row, col) => {
+    // e is the event that triggered. Target is what caused the event
     let val = parseInt(e.target.value) || 0;
     let grid = getDeepCopy(board);
-    if (val === -1 || (val >= 1 && val <= 9)) {
+    if (val === 0 || (val >= 1 && val <= 9)) {
       grid[row][col] = val;
     }
     setBoard(grid);
@@ -42,7 +46,7 @@ function Sudoku() {
       <div className="App-header">
         <h3>Sudoku Solver</h3>
         {puzzle && <Board board={board} puzzle={puzzle} handleCellChange={handleCellChange}/>}
-        <button className="button solve" onClick={solvePuzzle}>Solve</button>
+        <ButtonsBottom solvePuzzle={solvePuzzle}/>
       </div>
     </div>
   );

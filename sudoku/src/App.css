@@ -19,6 +19,7 @@
   font-size: 20px;
   text-align: center;
   padding: 0;
+  margin: 0;;
   border: 1px solid black;
 }
 
@@ -30,4 +31,45 @@ table {
 
 td {
   padding: 0;
+}
+
+.button-container {
+  display: flex;
+  width: 50vw;
+  min-width: 250px;
+  margin-top: 10px;
+  justify-content: space-around;
+}
+
+.button {
+  cursor: pointer;
+  font-weight: bold;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 15px;
+  font-size: 14px;
+}
+
+.button:hover {
+  filter: brightness(120%);
+}
+
+.solve {
+  background-color: orange;
+}
+
+.check {
+  background-color: tomato;
+}
+
+.reset {
+  background-color: teal;
+}
+
+.row-border {
+  border-bottom: 2px solid black;
+}
+
+.col-border{
+  border-right: 2px solid black;
 }
