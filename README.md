@@ -13,8 +13,6 @@ The transformations done on the puzzle include:
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [Features](#features)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Installation
@@ -59,3 +57,15 @@ $ npm install
 ```bash
 $ npm start
 ```
+
+## Usage
+![SudokuScreenShot](sudoku.png)
+
++ Solve the puzzle by entering your answers in the available cells
++ Check if your answers are correct by clicking the 'check' button below the board. Correct answers will change colour and can no longer be changed
++ If you get stuck, you can solve the puzzle by clicking the 'solve' button
++ Reset the board back to the original puzzle by clicking the 'reset' button
++ Get a new puzzle by clicking one of the buttons above the board. You can select the puzzle difficulty as well
+
+## License
+This project is licenced under the GNU General Public License v3.0
