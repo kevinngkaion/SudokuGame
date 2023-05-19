@@ -31,9 +31,9 @@ function Sudoku() {
   async function fetchBoard(difficulty) {
     let url;
     if (difficulty){
-      url = `http://localhost:8000/sudoku/${difficulty}`;
+      url = `https://sudoku-api-test.onrender.com/sudoku/${difficulty}`;
     } else {
-      url = 'http://localhost:8000/sudoku';
+      url = 'https://sudoku-api-test.onrender.com/sudoku';
     }
     
     const res = await fetch(url)
